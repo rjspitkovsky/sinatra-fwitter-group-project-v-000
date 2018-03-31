@@ -71,13 +71,10 @@ end
   end
 
   get '/users/:slug' do
-    if !logged_in?
-      redirect to '/login'
-    else
     @user = User.find_by_slug(params[:slug])
     erb :'users/show'
   end
-end
+
 
   get '/tweets/new' do
     if !logged_in?
@@ -129,7 +126,7 @@ end
 
 
 
-  delete '/tweets/tweets/:id/delete' do
+  post '/tweets/:id/delete' do
     @tweet = Tweet.find_by_id(params[:id])
     if logged_in? && current_user(session).id == @tweet.user_id
         @tweet.delete
