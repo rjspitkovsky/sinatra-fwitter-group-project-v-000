@@ -115,7 +115,7 @@ end
 
   patch '/tweets/:id/edit' do
     @tweet = Tweet.find_by_id(params[:id])
-    if params[:content] != ""
+    if params[:content] != "" && @tweet.user_id == current_user(session)
       @tweet.update(content: params[:content])
       redirect to '/tweets'
     else
