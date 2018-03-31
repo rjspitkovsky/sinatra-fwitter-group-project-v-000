@@ -126,7 +126,8 @@ end
 
 
 
-  post '/tweets/:id/delete' do
+
+delete '/tweets/:id/delete' do
     @tweet = Tweet.find_by_id(params[:id])
     if logged_in? && current_user(session).id == @tweet.user_id
         @tweet.delete
@@ -135,11 +136,6 @@ end
         redirect to '/tweets'
     end
   end
-
-
-  # get '/failure' do
-  #   erb :failure
-  # end
 
 
   ##HELPER METHODS
