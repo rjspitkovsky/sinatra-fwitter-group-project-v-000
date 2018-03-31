@@ -75,7 +75,6 @@ end
       redirect to '/login'
     else
     @user = User.find_by_slug(params[:slug])
-    @user_tweets = @user.tweets
     erb :'users/show'
   end
 end
@@ -107,8 +106,27 @@ end
   end
   end
 
+  get '/tweets/:id/edit' do
+    if !logged_in?
+      redirect to '/login'
+    else
+    @tweet = Tweet.find_by_id(params[:id])
+    erb :'tweets/edit_tweet'
+  end
+end 
 
-  
+
+  patch '/tweets/:id' do
+    @tweet = Tweet.find_by_id(params[:id])
+    if params[:content] != ""
+      @tweet.update(content: params[:content])
+      redirect to '/tweets'
+    else
+    redirect to "/tweets/#{@tweet.id}"
+  end
+end
+
+
 
   delete '/tweets/:id/delete' do
     @tweet = Tweet.find_by_id(params[:id])
