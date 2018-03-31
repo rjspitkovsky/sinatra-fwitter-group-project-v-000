@@ -113,24 +113,25 @@ end
     @tweet = Tweet.find_by_id(params[:id])
     erb :'tweets/edit_tweet'
   end
-end 
+end
 
 
-  patch '/tweets/:id' do
+  patch '/tweets/:id/edit' do
+
     @tweet = Tweet.find_by_id(params[:id])
     if params[:content] != ""
       @tweet.update(content: params[:content])
       redirect to '/tweets'
     else
-    redirect to "/tweets/#{@tweet.id}"
+    redirect to "/tweets/#{@tweet.id}/edit"
   end
 end
 
 
 
-  delete '/tweets/:id/delete' do
+  delete '/tweets/tweets/:id/delete' do
     @tweet = Tweet.find_by_id(params[:id])
-    if logged_in? && current_user(session).id
+    if logged_in? && current_user(session).id == @tweet.user_id
         @tweet.delete
         redirect to '/tweets'
     else
